@@ -11,7 +11,7 @@ export const register = (req, res) => {
     if(data.length) return res.status(409).json("User already exists!")
   })
 
-  // Create a New User
+  // Create a New Userss
     //Hash the password
 };
 export const login = (req, res) => {};
