@@ -3,8 +3,7 @@ import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 
 export const getComments = (req, res) => {
-  const q = `SELECT c.*, u.id AS userId, name, profilePic FROM comments AS c JOIN users AS u ON (u.id = c.userid) WHERE c.postId=?
-         ORDER BY p.createdAT DESC`;
+  const q = `SELECT c.*, u.id AS userId, name, profilePic FROM comments AS c JOIN users AS u ON (u.id = c.userid) WHERE c.postId=? ORDER BY c.createdAt DESC`;
   db.query(q, [req.query.postId], (err, data) => {
     if (err) return res.status(500).json(err);
 
@@ -19,15 +18,16 @@ export const addComment = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const q =
-      "INSERT INTO comments (`desc`,`createdAt`,`userId`, postId) VALUES(?)";
+      "INSERT INTO comments (`desc`,`createdAt`,`userid`, `postid`) VALUES(?)";
 
     const values = [
       req.body.desc,
-      req.body.img,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
       req.body.postId,
     ];
+    console.log("v addComment", values);
+    console.log("req body comment", req.body.postId);
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
 

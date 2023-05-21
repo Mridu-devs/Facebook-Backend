@@ -13,7 +13,6 @@ export const getPosts = (req, res) => {
        ORDER BY p.createdAT DESC`;
     db.query(q, [userInfo.id, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);
-
       return res.status(200).json(data);
     });
   });
