@@ -6,3 +6,5 @@ export const db = mysql.createConnection({
   password: "password",
   database: "social",
 });
+
+
